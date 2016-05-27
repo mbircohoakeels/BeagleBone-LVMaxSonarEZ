@@ -59,7 +59,7 @@ private:
     void AddToDataStore( );
     double ConvertReadingToDistance( int _reading );
 
-    double Reading;
+    int Reading;
     double AvgReading;
 
     pthread_t SonicReaderThread;

@@ -42,7 +42,7 @@ void LVMaxSonarEZ::Stop( ) {
 void *LVMaxSonarEZ::GetValueAsInt( void *static_inst ) {
     LVMaxSonarEZ* SonicInst = (LVMaxSonarEZ*)static_inst;
     while( SonicInst->CurrentStatus == DeviceStatus::On ) {
-        SonicInst->Reading = SonicInst->ConvertReadingToDistance( SonicInst->GetReading( ) );
+        SonicInst->Reading = SonicInst->GetReading( );
         SonicInst->AddToDataStore( );
         usleep( SONIC_DATATIMER );
     }
@@ -67,7 +67,7 @@ void LVMaxSonarEZ::SetAverage( int iterations = 50 ) {
     double total_reading = 0;
     int i = 0;
     while (i < iterations) {
-        total_reading += this->GetReading( );
+        total_reading += this->Reading;
         usleep( this->DataTimer );
         i++;
     }
@@ -90,7 +90,7 @@ void LVMaxSonarEZ::SetStatus( DeviceStatus _status ) {
 }
 
 double LVMaxSonarEZ::Distance( ) {
-    return this->Reading;
+    return this->ConvertReadingToDistance( this->Reading );
 }
 
 double LVMaxSonarEZ::AvgDistance( ) {
